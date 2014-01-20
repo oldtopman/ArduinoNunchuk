@@ -13,11 +13,6 @@ Project URL: https://github.com/oldtopman/WiiAccessories
 Project License: CC-BY-NC-SA - See SHARING for details.
 *******************************************************************************
 **/
- * Based on the following resources:
- *   https://github.com/GabrielBianconi/ArduinoNunchuk
- *   http://www.windmeadow.com/node/42
- *   http://todbot.com/blog/2008/02/18/wiichuck-wii-nunchuck-adapter-available/
- *   http://wiibrew.org/wiki/Wiimote/Extension_Controllers
 
 #include <Arduino.h>
 #include <Wire.h>
