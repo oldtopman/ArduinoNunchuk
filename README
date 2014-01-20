@@ -1,0 +1,20 @@
+WiiAccessories - Wii Remote Accessory Library for Arduino
+
+Original Work: Copyright 2011-2013:
+ - Gabriel Bianconi, http://www.gabrielbianconi.com/
+
+Derivative Work: Copyright 2014
+- oldtopman, oldtopman <at> gmail <dot> com
+
+Project URL: https://github.com/oldtopman/WiiAccessories
+
+Project License: CC-BY-NC-SA - See SHARING for details.
+
+Based on the following resources:
+ - http://www.windmeadow.com/node/42
+ - http://todbot.com/blog/2008/02/18/wiichuck-wii-nunchuck-adapter-available/
+ - http://wiibrew.org/wiki/Wiimote/Extension_Controllers
+
+INSTALLATION:
+
+See INSTALL for details.

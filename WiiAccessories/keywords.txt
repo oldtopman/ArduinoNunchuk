@@ -1,0 +1,20 @@
+###
+################################################################################
+# keywords.txt
+#
+# Underlying work: https://github.com/GabrielBianconi/ArduinoNunchuk
+# Copyright 2011-2013 Gabriel Bianconi, http://www.gabrielbianconi.com/
+#
+# Derivative work: https://github.com/oldtopman/WiiAccessories
+# Copyright 2014 oldtopman, oldtopman <at> gmail <dot> com
+#
+# Project URL: https://github.com/oldtopman/WiiAccessories
+#
+# Project License: CC-BY-NC-SA - See SHARING for details.
+################################################################################
+###
+
+WiiNunchuk	KEYWORD1
+WiiMotionPlus	KEYWORD2
+init	KEYWORD2
+update	KEYWORD2
