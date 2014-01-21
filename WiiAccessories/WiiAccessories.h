@@ -45,7 +45,7 @@ class WiiMotionPlus
     void update();
 };
 
-class BetaWiiClassic
+class WiiClassic
 {
   public:
     

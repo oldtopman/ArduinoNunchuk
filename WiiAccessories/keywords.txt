@@ -16,6 +16,6 @@
 
 WiiNunchuk	KEYWORD1
 WiiMotionPlus	KEYWORD1
-BetaWiiClassic	KEYWORD1
+WiiClassic	KEYWORD1
 init	KEYWORD2
 update	KEYWORD2

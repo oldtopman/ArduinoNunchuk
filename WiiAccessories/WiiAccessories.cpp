@@ -97,7 +97,7 @@ void WiiMotionPlus::update()
   WiiMotionPlus::roll=((values[5]>>2)<<8)+values[2];
 }
 
-void BetaWiiClassic::init()
+void WiiClassic::init()
 {
   sendByte(0x52, 0x40, 0x00);
   
@@ -105,14 +105,14 @@ void BetaWiiClassic::init()
   buttons[1] = 0xff;
   
   //First update initializes, slight delay for completion.
-  BetaWiiClassic::update();
+  WiiClassic::update();
   delay(10);
   
   //Actual update call.
-  BetaWiiClassic::update();
+  WiiClassic::update();
 }
 
-void BetaWiiClassic::update()
+void WiiClassic::update()
 {
   int count = 0;
   
@@ -128,7 +128,7 @@ void BetaWiiClassic::update()
   count = 0;
   while(count < 4)
   {
-    values[count] = BetaWiiClassic::decoder(Wire.read());
+    values[count] = WiiClassic::decoder(Wire.read());
     count++;
   }
   
@@ -136,7 +136,7 @@ void BetaWiiClassic::update()
   count = 0;
   while(count < 2)
   {
-    buttons[count] = BetaWiiClassic::decoder(Wire.read());
+    buttons[count] = WiiClassic::decoder(Wire.read());
     count++;
   }
   
@@ -147,25 +147,25 @@ void BetaWiiClassic::update()
   **/
   
   //Face Buttons.
-  upButton = BetaWiiClassic::isPressed(1,0);
-  downButton = BetaWiiClassic::isPressed(0,6);
-  leftButton = BetaWiiClassic::isPressed(1,1);
-  rightButton = BetaWiiClassic::isPressed(0,7);
+  upButton = WiiClassic::isPressed(1,0);
+  downButton = WiiClassic::isPressed(0,6);
+  leftButton = WiiClassic::isPressed(1,1);
+  rightButton = WiiClassic::isPressed(0,7);
   
-  aButton = BetaWiiClassic::isPressed(1,4);
-  bButton = BetaWiiClassic::isPressed(1,6);
-  xButton = BetaWiiClassic::isPressed(1,3);
-  yButton = BetaWiiClassic::isPressed(1,5);
+  aButton = WiiClassic::isPressed(1,4);
+  bButton = WiiClassic::isPressed(1,6);
+  xButton = WiiClassic::isPressed(1,3);
+  yButton = WiiClassic::isPressed(1,5);
   
-  selectButton = BetaWiiClassic::isPressed(0,4);
-  homeButton = BetaWiiClassic::isPressed(0,3);
-  startButton = BetaWiiClassic::isPressed(0,2);
+  selectButton = WiiClassic::isPressed(0,4);
+  homeButton = WiiClassic::isPressed(0,3);
+  startButton = WiiClassic::isPressed(0,2);
   
   //Shoulder buttons.
-  lButton = BetaWiiClassic::isPressed(0,5);
-  rButton = BetaWiiClassic::isPressed(0,1);
-  zlButton = BetaWiiClassic::isPressed(1,7);
-  zrButton = BetaWiiClassic::isPressed(1,2);
+  lButton = WiiClassic::isPressed(0,5);
+  rButton = WiiClassic::isPressed(0,1);
+  zlButton = WiiClassic::isPressed(1,7);
+  zrButton = WiiClassic::isPressed(1,2);
   lButtonAnalog = ((values[2] & 0x60) >> 2) + ((values[3] & 0xe0) >> 5);
   rButtonAnalog = values[3] & 0x1f;
   
@@ -177,14 +177,14 @@ void BetaWiiClassic::update()
 }
 
 //Checks certain bits for buttons.
-boolean BetaWiiClassic::isPressed(byte p_row, byte p_bit)
+boolean WiiClassic::isPressed(byte p_row, byte p_bit)
 {
   byte mask = (1 << p_bit);
   return ( !(buttons[p_row] & mask) );
 }
 
 //Decodes Classic controller bytes.
-byte BetaWiiClassic::decoder(byte p_byte)
+byte WiiClassic::decoder(byte p_byte)
 {
   return ((p_byte ^ 0x17) + 0x17);
 }
