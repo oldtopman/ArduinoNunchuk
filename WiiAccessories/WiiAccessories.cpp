@@ -101,6 +101,9 @@ void BetaWiiClassic::init()
 {
   sendByte(0x52, 0x40, 0x00);
   
+  buttons[0] = 0xff;
+  buttons[1] = 0xff;
+  
   BetaWiiClassic::update();
 }
 
@@ -108,12 +111,6 @@ void BetaWiiClassic::update()
 {
   int count = 0;
   uint8_t values[4];
-  
-  //Poke for data.
-  //Not using sendByte as we don't do a full i2c...thing
-  Wire.beginTransmission(0x52);
-  Wire.write(0x00);
-  Wire.endTransmission();
   
   Wire.requestFrom(0x52, 6);
   
@@ -127,7 +124,6 @@ void BetaWiiClassic::update()
     }
     else
     {
-      lastButtons[count-4] = buttons[count-4];
       buttons[count-4] = BetaWiiClassic::decoder(Wire.read());
     }
     count++;
@@ -135,6 +131,7 @@ void BetaWiiClassic::update()
   
   if(count > 5)
   {
+    //Poke for data.
     Wire.beginTransmission(0x52);
     Wire.write(0x00);
     Wire.endTransmission();
@@ -180,7 +177,7 @@ void BetaWiiClassic::update()
 boolean BetaWiiClassic::isPressed(byte p_row, byte p_bit)
 {
   byte mask = (1 << p_bit);
-  return ( !(buttons[p_row] & mask) ) && (lastButtons[p_row] & mask);
+  return ( !(buttons[p_row] & mask) );
 }
 
 byte BetaWiiClassic::decoder(byte p_byte)

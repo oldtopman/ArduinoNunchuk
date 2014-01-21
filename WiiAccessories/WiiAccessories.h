@@ -85,7 +85,6 @@ class BetaWiiClassic
   private:
     
     uint8_t buttons[2];
-    uint8_t lastButtons[2];
     
     boolean isPressed(byte p_row, byte p_bit);
     byte decoder(byte p_byte);
