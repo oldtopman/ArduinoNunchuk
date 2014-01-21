@@ -64,7 +64,6 @@ void WiiNunchuk::update()
 
 void WiiMotionPlus::init()
 {
-  //Initialize the WMP.
   //Note that it moves from 0x53 to 0x52.
   sendByte(0x53, 0xFE, 0x04);
   
@@ -97,4 +96,94 @@ void WiiMotionPlus::update()
   WiiMotionPlus::pitch=((values[4]>>2)<<8)+values[1];
   WiiMotionPlus::roll=((values[5]>>2)<<8)+values[2];
 }
+
+void BetaWiiClassic::init()
+{
+  sendByte(0x52, 0x40, 0x00);
   
+  BetaWiiClassic::update();
+}
+
+void BetaWiiClassic::update()
+{
+  int count = 0;
+  uint8_t values[4];
+  
+  //Poke for data.
+  //Not using sendByte as we don't do a full i2c...thing
+  Wire.beginTransmission(0x52);
+  Wire.write(0x00);
+  Wire.endTransmission();
+  
+  Wire.requestFrom(0x52, 6);
+  
+  //Sorta complex, may comment later when it's understood.
+  while(Wire.available())
+  {
+    
+    if(count < 4)
+    {
+      values[count] = BetaWiiClassic::decoder(Wire.read());
+    }
+    else
+    {
+      lastButtons[count-4] = buttons[count-4];
+      buttons[count-4] = BetaWiiClassic::decoder(Wire.read());
+    }
+    count++;
+  }
+  
+  if(count > 5)
+  {
+    Wire.beginTransmission(0x52);
+    Wire.write(0x00);
+    Wire.endTransmission();
+    count = 0;
+  }
+  
+  /**
+  ******************************
+  ****Setting Button Values*****
+  ******************************
+  **/
+  
+  //Face Buttons.
+  upButton = BetaWiiClassic::isPressed(1,0);
+  downButton = BetaWiiClassic::isPressed(0,6);
+  leftButton = BetaWiiClassic::isPressed(1,1);
+  rightButton = BetaWiiClassic::isPressed(0,7);
+  
+  aButton = BetaWiiClassic::isPressed(1,4);
+  bButton = BetaWiiClassic::isPressed(1,6);
+  xButton = BetaWiiClassic::isPressed(1,3);
+  yButton = BetaWiiClassic::isPressed(1,5);
+  
+  selectButton = BetaWiiClassic::isPressed(0,4);
+  homeButton = BetaWiiClassic::isPressed(0,3);
+  startButton = BetaWiiClassic::isPressed(0,2);
+  
+  //Shoulder buttons.
+  lButton = BetaWiiClassic::isPressed(0,5);
+  rButton = BetaWiiClassic::isPressed(0,1);
+  zlButton = BetaWiiClassic::isPressed(1,7);
+  zrButton = BetaWiiClassic::isPressed(1,2);
+  lButtonAnalog = ((values[2] & 0x60) >> 2) + ((values[3] & 0xe0) >> 5);
+  rButtonAnalog = values[3] & 0x1f;
+  
+  //Analog sticks.
+  leftAnalogY = ( (values[1] & 0x3f) ); 
+  leftAnalogX = ( (values[0] & 0x3f) );
+  rightAnalogY = values[2] & 0x1f;  
+  rightAnalogX = ((values[0] & 0xc0) >> 3) + ((values[1] & 0xc0) >> 5) +  ((values[2] & 0x80) >> 7);
+}
+
+boolean BetaWiiClassic::isPressed(byte p_row, byte p_bit)
+{
+  byte mask = (1 << p_bit);
+  return ( !(buttons[p_row] & mask) ) && (lastButtons[p_row] & mask);
+}
+
+byte BetaWiiClassic::decoder(byte p_byte)
+{
+  return ((p_byte ^ 0x17) + 0x17);
+}

@@ -27,8 +27,8 @@ class WiiNunchuk
     int accelX;
     int accelY;
     int accelZ;
-    int zButton;
-    int cButton;
+    bool zButton;
+    bool cButton;
 
     void init();
     void update();
@@ -44,5 +44,53 @@ class WiiMotionPlus
     void init();
     void update();
 };
+
+class BetaWiiClassic
+{
+  public:
+    
+    //Face buttons.
+    bool upButton;
+    bool downButton;
+    bool leftButton;
+    bool rightButton;
+    
+    bool aButton;
+    bool bButton;
+    bool xButton;
+    bool yButton;
+    
+    bool selectButton;
+    bool homeButton;
+    bool startButton;
+    
+    //Shoulder buttons.
+    bool lButton;
+    bool rButton;
+    bool zlButton;
+    bool zrButton;
+    int lButtonAnalog;
+    int rButtonAnalog;
+    
+    //Analog sticks.
+    int leftAnalogY;
+    int leftAnalogX;
+    
+    int rightAnalogY;
+    int rightAnalogX;
+    
+    void init();
+    void update();
+    
+  private:
+    
+    uint8_t buttons[2];
+    uint8_t lastButtons[2];
+    
+    boolean isPressed(byte p_row, byte p_bit);
+    byte decoder(byte p_byte);
+    
+};
+    
 
 #endif
