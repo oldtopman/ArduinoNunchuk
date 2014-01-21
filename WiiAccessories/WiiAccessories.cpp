@@ -104,38 +104,40 @@ void BetaWiiClassic::init()
   buttons[0] = 0xff;
   buttons[1] = 0xff;
   
+  //First update initializes, slight delay for completion.
+  BetaWiiClassic::update();
+  delay(10);
+  
+  //Actual update call.
   BetaWiiClassic::update();
 }
 
 void BetaWiiClassic::update()
 {
   int count = 0;
-  uint8_t values[4];
   
+  //Send request for data.
   Wire.requestFrom(0x52, 6);
   
-  //Sorta complex, may comment later when it's understood.
-  while(Wire.available())
+  //Signal data request to the classic controller.
+  Wire.beginTransmission(0x52);
+  Wire.write(0x00);
+  Wire.endTransmission();
+  
+  //Get analog values.
+  count = 0;
+  while(count < 4)
   {
-    
-    if(count < 4)
-    {
-      values[count] = BetaWiiClassic::decoder(Wire.read());
-    }
-    else
-    {
-      buttons[count-4] = BetaWiiClassic::decoder(Wire.read());
-    }
+    values[count] = BetaWiiClassic::decoder(Wire.read());
     count++;
   }
   
-  if(count > 5)
+  //Get buttons.
+  count = 0;
+  while(count < 2)
   {
-    //Poke for data.
-    Wire.beginTransmission(0x52);
-    Wire.write(0x00);
-    Wire.endTransmission();
-    count = 0;
+    buttons[count] = BetaWiiClassic::decoder(Wire.read());
+    count++;
   }
   
   /**
@@ -174,12 +176,14 @@ void BetaWiiClassic::update()
   rightAnalogX = ((values[0] & 0xc0) >> 3) + ((values[1] & 0xc0) >> 5) +  ((values[2] & 0x80) >> 7);
 }
 
+//Checks certain bits for buttons.
 boolean BetaWiiClassic::isPressed(byte p_row, byte p_bit)
 {
   byte mask = (1 << p_bit);
   return ( !(buttons[p_row] & mask) );
 }
 
+//Decodes Classic controller bytes.
 byte BetaWiiClassic::decoder(byte p_byte)
 {
   return ((p_byte ^ 0x17) + 0x17);
