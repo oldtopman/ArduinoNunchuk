@@ -1,6 +1,6 @@
 /**
 *******************************************************************************
-WiiAccessories-WMP.ino
+WiiMotionPlusDemo.ino
 
 Underlying work: https://github.com/GabrielBianconi/ArduinoNunchuk
 Copyright 2011-2013 Gabriel Bianconi, http://www.gabrielbianconi.com/
