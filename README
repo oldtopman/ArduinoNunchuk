@@ -1,7 +1,9 @@
 WiiAccessories - Wii Remote Accessory Library for Arduino
 
 This is a library that provides Arduino support for Wii Remote accessories.
-Classic controller support is incoming, and in need of a tester.
+Currently, Nunchuk, Wii Motion Plus, and Classic Controllers are supported.
+
+Third party accessories may not be compatible with this library.
 
 See INSTALL for details on installation.
 
