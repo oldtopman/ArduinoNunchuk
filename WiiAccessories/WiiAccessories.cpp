@@ -77,6 +77,9 @@ void WiiMotionPlus::update()
 {  
   int count = 0;
   int values[6];
+  for(int i = 0; i < 6; i++){
+      values[i] = 0;
+  }
   
   //Poke for data.
   //Not using sendByte as we don't do a full i2c...thing
@@ -86,7 +89,7 @@ void WiiMotionPlus::update()
   
   Wire.requestFrom(0x52, 6);
   
-  while(Wire.available())
+  while(count < 6)
   {
     values[count] = Wire.read();
     count++;

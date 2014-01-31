@@ -33,9 +33,10 @@ void loop()
 {
   wmp.update();
   
-  Serial.print(wiiMotionPlus.yaw, DEC);
+  Serial.print(wmp.yaw, DEC);
   Serial.print(" ");
-  Serial.print(wiiMotionPlus.pitch, DEC);
+  Serial.print(wmp.pitch, DEC);
   Serial.print(" ");
-  Serial.println(wiiMotionPlus.roll, DEC);
+  Serial.println(wmp.roll, DEC);
+  delay(10);
 }
