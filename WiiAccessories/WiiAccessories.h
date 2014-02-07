@@ -41,6 +41,12 @@ class WiiMotionPlus
     int pitch;
     int roll;
     
+    bool yawSlowMode;
+    bool pitchSlowMode;
+    bool rollSlowMode;
+    
+    bool extensionConnected;
+    
     void init();
     void update();
 };

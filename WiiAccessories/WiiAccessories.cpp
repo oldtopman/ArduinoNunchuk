@@ -95,9 +95,15 @@ void WiiMotionPlus::update()
     count++;
   }
   
-  WiiMotionPlus::yaw=((values[3]>>2)<<8)+values[0];
-  WiiMotionPlus::pitch=((values[4]>>2)<<8)+values[1];
-  WiiMotionPlus::roll=((values[5]>>2)<<8)+values[2];
+  WiiMotionPlus::yaw = ( (values[3]>>2) <<8) + values[0];
+  WiiMotionPlus::pitch = ( (values[4]>>2) <<8) + values[1];
+  WiiMotionPlus::roll = ( (values[5]>>2) <<8) + values[2];
+  
+  WiiMotionPlus::yawSlowMode = values[3] & (1 << 1);
+  WiiMotionPlus::pitchSlowMode = values[3] & (1 << 0);
+  WiiMotionPlus::rollSlowMode = values[4] & (1 << 1);
+  
+  WiiMotionPlus::extensionConnected = values[4] & (1 << 0);
 }
 
 void WiiClassic::init()

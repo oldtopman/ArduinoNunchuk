@@ -35,8 +35,16 @@ void loop()
   
   Serial.print(wmp.yaw, DEC);
   Serial.print(" ");
+  Serial.print(wmp.yawSlowMode, DEC);
+  Serial.print(" ");
   Serial.print(wmp.pitch, DEC);
   Serial.print(" ");
-  Serial.println(wmp.roll, DEC);
+  Serial.print(wmp.pitchSlowMode, DEC);
+  Serial.print(" ");
+  Serial.print(wmp.roll, DEC);
+  Serial.print(" ");
+  Serial.print(wmp.rollSlowMode, DEC);
+  Serial.print(" ");
+  Serial.println(wmp.extensionConnected, DEC);
   delay(10);
 }
